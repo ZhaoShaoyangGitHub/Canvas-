@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			canvas {
+				pointer-events: none;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			document.querySelector("style").append(`canvas {
+                position: fixed;
+                left: 0;
+                top: 0;
+                z-index: 9999;
+                pointer-events: none;
+            }`);
+			let canvas = document.createElement("canvas");
+			canvas.onclick = (e) => {
+				console.log(e);
+			};
+			document.body.appendChild(canvas);
+			const ctx = canvas.getContext("2d");
+			canvas.width = document.documentElement.clientWidth;
+			canvas.height = document.documentElement.clientHeight;
+			const p = {
+				x: 0,
+				y: 0,
+				r: 50,
+			};
+			document.addEventListener("mousemove", function (e) {
+				p.x = e.clientX;
+				p.y = e.clientY;
+				render();
+			});
+			const render = function () {
+				ctx.beginPath();
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				var radia = ctx.createRadialGradient(p.x, p.y, p.r, p.x, p.y, p.r * 3);
+				radia.addColorStop(0, "rgba(255, 255, 255, 0)");
+				radia.addColorStop(1, "rgba(0, 0, 0, 0.5)");
+				ctx.fillStyle = radia;
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+			};
+			render();
+		</script>
+	</body>
+</html>
